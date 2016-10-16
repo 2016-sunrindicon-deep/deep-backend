@@ -21,6 +21,8 @@
 ### User
 > id: user inherence id [Number]
 
+> token: user discrimination code [String]
+
 > user_id : User id [String required unique]
 
 > pw : User Password [String required]
@@ -33,4 +35,4 @@
 
 > online: is user online now? [Boolean] (if user online will return true
 
-> firends [String arry] (this array Contains ONLY inherence id)
+> firends [String array] (this array Contains ONLY inherence id)
