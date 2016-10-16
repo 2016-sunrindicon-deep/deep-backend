@@ -14,13 +14,14 @@ var app = express();
 
 var UserSchema = new mongoose.Schema({
     id:{type: Number},
-    user_id:{type: String},
-    passwd:{type: String},
+    token:{type: String},
+    user_id:{type: String, required: true, unique: true},
+    pw:{type: String, required: true},
     email:{type: String},
     nick_name:{type: String},
+    tag: [String],
     online: {type: Boolean},
     firends: [String],
-    tag: [String],
 });
 
 Users = mongoose.model('users', UserSchema);
@@ -74,3 +75,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
