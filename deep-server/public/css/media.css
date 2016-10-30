@@ -1,0 +1,71 @@
+@media (max-width:600px) {
+  .asideBar{
+      flex-basis: 0px;
+      display: none;
+  }
+  .chatHeader{
+    flex-basis: 55px;
+  }
+  .header{
+    display: none;
+  }
+  .menuButton{
+    display: block;
+    margin-left: 10px;
+  }
+  .menuButton > img{
+    display: block;
+    width:30px;
+    height: 30px;
+  }
+  .sideBar{
+    position: absolute;
+    width:200px;
+    /*height: 900px;*/
+    left: -203px;
+    -webkit-transition-duration: 0.4s;
+    -moz-transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    z-index: 2;
+  }
+}
+/*TABLET VIEW*/
+@media (min-width:600px) and (max-width:800px) {
+  .asideBar{
+    flex-basis: 225px;
+  }
+  .chatHeader{
+    flex-basis: 60px;
+  }
+  .header{
+    display: flex;
+  }
+  .sideBar{
+    position: absolute;
+    width:200px;
+    left: -203px;
+    -webkit-transition-duration: 0.4s;
+    -moz-transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    z-index: 2;
+  }
+  .header{
+    flex-basis: 70px;
+    border: none;
+  }
+}
+/*PC SCREEN VIEW*/
+@media (min-width:800px) {
+  .open .sideBar{
+    margin-left: -200px;
+  }
+  .header{
+    flex-basis: 70px;
+    border: 1px solid lightgray;
+  }
+  .chatHeader{
+    flex-basis: 60px;
+  }
+}

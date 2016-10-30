@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Settings</title>
+
+    <!-- <link rel="stylesheet" href="/css/main.css" media="screen" title="no title"> -->
+    <link rel="stylesheet" href="/css/header.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/media.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/settings.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/sider.css" media="screen" title="no title">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/js/main.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="headTitle">
+          <div class="openSideBar">
+            <img src="/img/icon/menu2.png" class="openSideBar_img" alt="" />
+          </div>
+          <div class="mainLogo">
+            <h1>NoW<span>here</span></h1>
+          </div>
+
+          <div class="topSearch">
+            <img src="/img/icon/search.png" alt="" class="topSearchImg" />
+            <!-- <input type="input" name="name" value="" placeholder="search People"> -->
+          </div>
+        </div>
+      </header>
+      <div class="content">
+        <div class="sideBar" style="">
+          <div class="profile">
+            <div class="profile_img">
+              <img src="/img/icon/profile.jpg" alt="" />
+            </div>
+            <div class="profile_index">
+              <div class="profile_name">
+                <%=Username%>
+              </div>
+              <div class="profile_country">
+                <%= Country %>
+              </div>
+            </div>
+
+          </div>
+          <div class="nav">
+
+            <div class="nav_app">
+              <ul>
+                <li class="nav__list nav_home"><img src="/img/icon/home.png"><div class="nav__index">Home</div></li>
+                <li class="nav__list nav_profile"><img src="/img/icon/profile.png"><div class="nav__index">Profile</div></li>
+                <li class="nav__list nav_messages"><img src="/img/icon/chat.png"><div class="nav__index">Messages</div></li>
+                <li class="nav__list nav_settings"><img src="/img/icon/setting.png"><div class="nav__index">Settings</div></li>
+              </ul>
+            </div>
+            <div class="nav_users">
+
+            </div>
+          </div>
+          <footer class="footer">
+            <span><a href="#">Help</a></span>
+            <span><a href="#">About</a></span>
+            <span><a href="#">Developer</a></span>
+          </footer>
+        </div>
+        <!-- 상단 헤드 -->
+
+        <!-- 메인 -->
+        <div class="settings">
+          <div class="setBox_1">
+            <div class="setProfile">
+
+            </div>
+          </div>
+          <div class="setBox_2">
+            <div class="setCountry">
+
+            </div>
+            <div class="setTema">
+              <div class="colorPickerBox">
+                <div class="blue">
+
+                </div>
+                <div class="red">
+
+                </div>
+                <div class="green">
+
+                </div>
+                <div class="oragne">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

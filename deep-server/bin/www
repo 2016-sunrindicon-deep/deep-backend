@@ -13,7 +13,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || '6974');
 app.set('port', port);
 
 
@@ -41,71 +41,65 @@ server.on('listening', onListening);
  * ADDED!! Socket.IO Connection.
  */
 
- var hU = "";
- var hUL;
+ db = [];
+ db = new Array();
 
-io.sockets.on('connection', function(socket) {
-    socket.on('home', function(username) {
-        console.log(username + "님의 방이생성되었습니다");
-        socket.username = username;
-        socket.room = username;
-        socket.join(username);
-    });
+ userList = [];
 
-    socket.on('score', function(team, score, cnt) {
-        switch (team) {
-            case "home":
-                io.sockets.in(socket.room).emit('home', score, cnt);
-                break;
-            case "away":
-                io.sockets.in(socket.room).emit('away', score, cnt);
-                break;
 
-        }
-    });
+ io.on('connection', function(socket){
+   var joinedUser = false;
+   var nickname;
 
-    socket.on('go', function(name, vid, room) {
-      io.sockets.in(socket.room).emit('start', name, vid, room);
-    });
+   // 유저 입장
+   socket.on('join', function(data){
+     if (joinedUser) { // 이미 입장 했다면 중단
+       return false;
+     }
 
-    socket.on('info', function(team, user, level) {
-        switch (team) {
-            case "home":
-                io.sockets.in(socket.room).emit('home', user, level);
-                hU = user;
-                hUL = level;
-                break;
-            case "away":
-                io.sockets.in(socket.room).emit('home', hU, hUL);
-                io.sockets.in(socket.room).emit('away', user, level);
-                break;
+     nickname = data;
+     userList.push(nickname);
+     console.log(userList);
 
-        }
-    });
+     socket.broadcast.emit('join', {nickname : nickname, userList : userList});
+     socket.emit('welcome', {nickname : nickname,userList : userList});
 
-    socket.on('sendAlert', function(name, url) {
-        var to = url.split("/");
-        io.to(to[3]).emit("alert", name, url);
-    });
+     joinedUser = true;
+   });
 
-    socket.on('connectRoom', function(newroom) {
-        if (socket.room === undefined) {
-            socket.join(newroom);
-            socket.room = newroom;
-        } else {
-            console.log(socket.room + '방을' + newroom + '으로바꿉니다');
-            socket.leave(socket.room);
-            socket.join(newroom);
-            socket.room = newroom;
-        }
-    });
 
-    // when the user disconnects.. perform this
-    socket.on('disconnect', function() {
-        socket.broadcast.emit('update', socket.username);
-        socket.leave(socket.room);
-    });
-});
+   // 메시지 전달
+   socket.on('msg', function(data){
+     console.log(' '+data.nickname + ' >> ' + data.opp + ' [ msg: '+data.msg+' ] ');
+     io.emit('msg', {
+       nickname : data.nickname
+       ,msg : data.msg
+       ,opp : data.opp
+       ,userList : userList
+     });
+   });
+
+   // 접속 종료
+   socket.on('disconnect', function () {
+     // 입장하지 않았다면 중단
+     if ( !joinedUser) {
+       console.log('--- not joinedUser left');
+       return false;
+     }
+
+     // 접속자목록에서 제거
+     var i = userList.indexOf(nickname);
+     var tmpUserList = userList;
+     userList.splice(i,1);
+
+     socket.broadcast.emit('left', {
+       nickname : nickname
+       ,userList : userList
+       ,tmpUserList : tmpUserList
+     });
+   });
+ });
+
 
 /**
  * Normalize a port into a number, string, or false.

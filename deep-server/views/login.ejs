@@ -1,83 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>login-page</title>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <meta name="viewport" content="width=width-divice, initial-scale=1 user-scalable=no">
-    <link rel="stylesheet" href="/stylesheets/login.css" media="screen" title="no title">
-  </head>
-  <body>
+    <link rel="stylesheet" href="/css/login.css" media="screen" title="no title">
+</head>
+
+<body>
     <!-- 배경화면 -->
     <div class="background"></div>
     <div class="cover"></div>
-    <!--  -->
     <div class="login_cover">
-      <div class="login">
-  		  <div class="login-screen">
-    			<div class="app-title">
-    				<h1 id="title">NoW<span id="here">here.</span></h1>
-            <!-- <h2 id="sub_title">딥러닝 실시간 번역 채팅서비스</h4> -->
-    			</div>
-    			<form class="login-form" action="/auth/login" method="post" id="loginBOX">
-    				<div class="control-group id">
-                  <!-- 아이디 입력 -->
-    				      <input type="text" class="login-field" value="" placeholder="username" id="login-name" required autocomplete="off" autofocus="auto" name="id_input">
-    				</div>
-    				<div class="control-group pw">
-                  <!-- 비밀번호 입력 -->
-    				      <input type="password" class="login-field" value="" placeholder="password" id="login-pass" required="required" autocomplete="off" name="pw_input" >
-    				</div>
-            <div class="control-group">
-                  <!-- 전송버튼(로그인시에만 나타남) -->
-    				      <input type="button" class="btn sign" value="Sign up">
-                  <input type="submit" class="btn log" value="login">
-    				</div>
-          </form>
-          <form class="login-form" action="/auth/signup" method="post" id="signBOX" style="display:none">
-    				<div class="control-group id">
-                  <!-- 아이디 입력 -->
-    				      <input type="text" class="login-field" value="" placeholder="username" id="login-name" required autocomplete="off" autofocus="auto" name="id_input">
-    				</div>
-    				<div class="control-group pw">
-                  <!-- 비밀번호 입력 -->
-    				      <input type="password" class="login-field" value="" placeholder="password" id="login-pass" required="required" autocomplete="off" name="pw_input" >
-    				</div>
-            <div class="control-group">
-                  <input type="mail" class="login-field" value="" placeholder="e-mail" id="login-mail" autocomplete="off">
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1 id="title">NoW<span id="here">here.</span></h1>
+                    <!-- <h2 id="sub_title">딥러닝 실시간 번역 채팅서비스</h4> -->
+                </div>
+                <form class="login-form" action="/auth/login" method="post" id="loginBOX">
+                    <div class="control-group id">
+                        <!-- 아이디 입력 -->
+                        <input type="text" class="login-field" value="" placeholder="username" id="login-name" required autocomplete="off" autofocus="auto" name="id_input">
+                    </div>
+                    <div class="control-group pw">
+                        <!-- 비밀번호 입력 -->
+                        <input type="password" class="login-field" value="" placeholder="password" id="login-pass" required="required" autocomplete="off" name="pw_input">
+                    </div>
+                    <div class="control-group">
+                        <!-- 전송버튼(로그인시에만 나타남) -->
+                        <input type="button" class="btn sign" value="Sign up">
+                        <input type="submit" class="btn log" value="login">
+                    </div>
+                </form>
+                <form class="login-form" action="/auth/signup" method="post" id="signBOX" style="display:none">
+                    <div class="control-group id">
+                        <!-- 아이디 입력 -->
+                        <input type="text" class="login-field" value="" placeholder="username" id="login-name" required autocomplete="off" autofocus="auto" name="id_input">
+                    </div>
+                    <div class="control-group pw">
+                        <!-- 비밀번호 입력 -->
+                        <input type="password" class="login-field" value="" placeholder="password" id="login-pass" required="required" autocomplete="off" name="pw_input">
+                    </div>
+                    <div class="control-group">
+                        <input type="mail" class="login-field" value="" placeholder="e-mail" id="login-mail" autocomplete="off" name="mail_input">
+                    </div>
+                    <div class="control-group">
+                        <input type="submit" class="btn signupBtn" value="Sign up">
+                    </div>
+                </form>
             </div>
-            <div class="control-group">
-    				      <input type="submit" class="btn signupBtn" value="Sign up">
-    				</div>
-          </form>
-  	    </div>
-  	  </div>
+        </div>
     </div>
 
-  </body>
-  <script type="text/javascript">
-    $('.sign').click(function(){
-      $('#loginBOX').css('display', 'none');
-      $('#signBOX').show();
-      sign = true;
+</body>
+<script type="text/javascript">
+    $('.sign').click(function() {
+        $('#loginBOX').css('display', 'none');
+        $('#signBOX').show();
+        sign = true;
     });
+    $(window).load(function() {
+        fadeIned();
 
-    $(window).load(function(){
-      fadeIned();
+    })
 
-    });
-
-    function fadeIned(){
-      var imgNum =  Math.floor(Math.random()*11)+1;
-      $('.background').css('background-image', 'url("/images/back/ex'+imgNum+'.jpg")');
-      $('.background').css('display', 'none');
-      $(".background").fadeIn(1000);
-      setTimeout(fadeOuted, 10000);
+    function fadeIned() {
+        var imgNum = Math.floor(Math.random() * 11) + 1;
+        $('.background').css('background-image', 'url("/img/back/ex' + imgNum + '.jpg")');
+        // $('.background').css('background-image', 'url("img/ex5.jpg")');
+        $('.background').css('display', 'none');
+        $(".background").fadeIn(1000);
+        setTimeout(fadeOuted, 10000);
     }
 
-    function fadeOuted(){
-      $(".background").fadeOut(1000);
-      setTimeout(fadeIned, 1000);
+    function fadeOuted() {
+        $(".background").fadeOut(1000);
+        setTimeout(fadeIned, 1000);
     }
-  </script>
+</script>
+
 </html>
