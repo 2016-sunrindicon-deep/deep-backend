@@ -25,6 +25,7 @@ var UserSchema = new mongoose.Schema({
     user_id:{type: String, required: true, unique: true},
     pw:{type: String, required: true},
     email:{type: String},
+    Country: {type: String, default: "no country"},
     tag: [String],
     online: {type: Boolean},
     firends: [String],

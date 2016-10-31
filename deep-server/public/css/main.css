@@ -11,20 +11,25 @@ body, html{
   margin: 0px;
   padding: 0px;
 }
-.container {
+.messagesPage .container {
   display: flex;
   flex-direction: column;
 }
 
-.content{
+.messagesPage .content{
   display: flex;
   flex-direction:row;
   flex:5;
 }
-.chatting{
+.messagesPage .article{
   flex:7;
   display: flex;
   flex-direction: row;
+}
+.messagesPage .main{
+  display: flex;
+  flex-direction:row;
+  width:100%;
 }
 .chatView{
   display: flex;
@@ -42,11 +47,21 @@ body, html{
   align-items: center;
   justify-content: center;
 }
+.backButton{
+  margin-left: 5px;
+}
+.backButton > img{
+  width:30px;
+  height: 30px;
+}
 .partnerView{
   flex:5;
   text-align: center;
   font-size: 13pt;
   font-family: 'Exo', sans-serif;
+}
+.menuButton{
+  margin-right: 10px;
 }
 
 .chatIndexBOX{

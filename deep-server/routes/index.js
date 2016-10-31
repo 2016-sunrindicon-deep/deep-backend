@@ -2,28 +2,43 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res) {
-    res.render('login.ejs', {});
+    if(req.session.nickname){
+      res.redirect('chat');
+    }else{
+      res.render('login');
+    }
 });
 
 router.get('/profile', function(req, res) {
-    res.render('profile.ejs', {
+    res.render('profile', {
         title: "NO.w.HERE",
-        Country: 'korea',
-        Username: db[db.length - 1].id
+        Country: req.session.country,
+        Username: req.session.nickname
     });
 });
+
 router.get('/settings', function(req, res) {
-    res.render('settings.ejs', {
+  if(req.session.country === "no country"){
+    res.render('settings', {
         title: "Settings",
-        Country: 'korea',
-        Username: db[db.length - 1].id
+        Country: 'no country',
+        Username: req.session.nickname
     });
-});
-router.get('/messages', function(req, res) {
-    res.render('main.ejs', {
+  }else{
+    res.render('settings', {
         title: "Settings",
-        Country: 'korea',
-        Username: db[db.length - 1].id
+        Country: req.session.country,
+        Username: req.session.nickname
+    });
+  }
+
+});
+
+router.get('/messages', function(req, res) {
+    res.render('main', {
+        title: "Settings",
+        Country: req.session.country,
+        Username: req.session.nickname
     });
 });
 

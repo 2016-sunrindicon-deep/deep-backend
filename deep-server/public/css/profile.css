@@ -1,3 +1,4 @@
+
 /*rgb(241, 162, 79) orange*/
 /*rgb(106, 194, 150) green*/
 /*rgb(102, 168, 207) blue*/
@@ -5,7 +6,7 @@
 
 @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
 @media (min-width:851px)  {
-  .setting{
+  .profilePage .article{
     width:850px;
   }
   .bigBox{
@@ -19,11 +20,8 @@
   }
 }
 @media (min-width:630px) and (max-width:850px){
-  .setting{
+  .profilePage .article{
     width:640px;
-  }
-  .setting > *{
-    /*border: 1px solid blue;*/
   }
   .bigBox{
     height: 400px;
@@ -35,7 +33,7 @@
   }
 }
 @media (max-width:630px) {
-  .setting{
+  .profilePage .article{
     width:385px;
   }
   .bigBox{
@@ -50,78 +48,22 @@
     display: none;
   }
 }
-
-body, html{
-  margin: 0px;
-  padding: 0px;
-  background-color: rgb(240, 240, 240)
-}
-.container {
-  display: flex;
-  flex-direction: column;
-}
-.content{
-  display: flex;
-  flex-direction:row;
-  flex:5;
-  align-items: center;
-  justify-content: center;
-}
-.header{
-  flex-shrink: 1;
-  flex-direction:row;
-  z-index: 0;
-  background-color:rgb(102, 168, 207);
-  border: none;
-}
-.headTitle{
-  flex:1;
-  display: flex;
-  border: 0px;
-  align-items: center;
-  justify-content: space-between;
-}
-.mainLogo > h1 {
-  color:white;
-  font-size: 21pt;
-  font-family: 'Exo', sans-serif;
-  text-align: center;
-  margin-left: 100px;
-}
-.mainLogo > h1 > span{
-   color:rgb(0, 0, 0);
-}
-.mainLogo{
-  border: none;
-}
-.topSearch > p{
-  color:white;
-}
-.topSearch > img{
-  width:25px;
-  height: 25px;
-}
-.topSearch{
-  display: flex;
-  align-items: center;
-  margin-right: 15px;
-
-}
-
-.setting > *{
-  /*border: 1px solid black;*/
-}
-.setting{
+.profilePage .article{
   display: inline-block;
   /*display: flex;*/
   margin: 0 auto;
-  height: 100%;
-
+  /*height: 100%;*/
+  overflow: scroll;
+}
+.profilePage .main{
+  display: inline-block;
+  margin: 0 auto;
+  overflow: scroll;
 }
 .box{
   float: left;
   margin: 10px;
-  background-color: rgb(216, 109, 84); !import
+  background-color: rgb(216, 109, 84);
 }
 .box{
   -webkit-transform: scale(1.00);

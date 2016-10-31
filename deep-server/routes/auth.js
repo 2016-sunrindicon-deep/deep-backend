@@ -13,17 +13,17 @@ router.post('/login', function(req, res) {
     if (req.body.id_input === "" || req.body.pw_input === "") {
         res.redirect('/');
     } else {
-        Users.findOne({
-            "user_id": req.body.id_input,
-            "pw": req.body.pw_input
-        }, function(err, member) {
+        Users.findOne({"user_id": req.body.id_input, "pw": req.body.pw_input}, function(err, member) {
             if (member) {
                 req.session.regenerate(function() {
                     req.session.nickname = member.user_id;
+                    req.session.country = member.Country
                     name = member.user_id;
                     console.log(name + "님 로그인하셨습니다");
                     res.redirect('/chat');
                 });
+            }else{
+              res.redirect('/');
             }
         });
     }
@@ -46,9 +46,11 @@ router.post('/signup', function(req, res) {
 
         current.save(function(err, data) {
             if (err) { // TODO handle the error
+                console.log("dd");
                 res.redirect('/')
             } else {
-                res.redirect('/chat');
+                console.log("asd");
+                res.redirect('/settings');
             }
         });
     }

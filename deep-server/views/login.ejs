@@ -13,6 +13,7 @@
     <!-- 배경화면 -->
     <div class="background"></div>
     <div class="cover"></div>
+    <!--  -->
     <div class="login_cover">
         <div class="login">
             <div class="login-screen">
@@ -35,7 +36,7 @@
                         <input type="submit" class="btn log" value="login">
                     </div>
                 </form>
-                <form class="login-form" action="/auth/signup" method="post" id="signBOX" style="display:none">
+                <form class="login-form" action="/auth/signup" method="post" id="signBOX" style="display:none" method="post">
                     <div class="control-group id">
                         <!-- 아이디 입력 -->
                         <input type="text" class="login-field" value="" placeholder="username" id="login-name" required autocomplete="off" autofocus="auto" name="id_input">
@@ -45,7 +46,7 @@
                         <input type="password" class="login-field" value="" placeholder="password" id="login-pass" required="required" autocomplete="off" name="pw_input">
                     </div>
                     <div class="control-group">
-                        <input type="mail" class="login-field" value="" placeholder="e-mail" id="login-mail" autocomplete="off" name="mail_input">
+                        <input type="mail" class="login-field" value="" placeholder="e-mail" id="login-mail" autocomplete="off" name="email_input">
                     </div>
                     <div class="control-group">
                         <input type="submit" class="btn signupBtn" value="Sign up">

@@ -134,7 +134,7 @@ text-align: center;
   color:white;
 }
 #here{
-  color:rgb(77, 200, 219);
+  color:rgb(30, 119, 236);
   font-family: 'Exo', sans-serif;
 }
 #title{
@@ -165,7 +165,7 @@ input {
 }
 
 .login-field:focus {
-border: 2px solid rgb(102, 168, 207);;
+border: 2px solid rgb(30, 119, 236);
 box-shadow: none;
 }
 .login-field-icon{
@@ -175,7 +175,7 @@ box-shadow: none;
 
 .btn {
   border: 2px solid transparent;
-  background: rgb(102, 168, 207);;
+  background: rgb(30, 119, 226);;
   color: #ffffff;
   font-size: 16px;
   line-height: 25px;
