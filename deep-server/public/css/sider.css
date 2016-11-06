@@ -1,0 +1,118 @@
+.sideBar{
+  background-color: #F7F8FA;
+  display: flex;
+  box-shadow: 0px 1px 3px #888888;
+  flex-basis: 200px;
+  flex-shrink: 1;
+  flex-direction: column;
+  -webkit-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  z-index: 2;
+}
+.profile{
+  flex-basis: 200px; flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 25px;
+}
+.profile_img{
+  background-color: black;
+  border-radius: 100%;
+  width:90px;
+  height: 90px;
+}
+.profile_img > img{
+  background-color: black;
+  border-radius: 100%;
+  width:90px;
+  height: 90px;
+}
+.profile_index{
+  margin: 13px 0px;
+}
+.profile_index > .profile_country{
+  font-size: 8pt;
+  color:gray;
+  text-align: center;
+}
+.profile_index > .profile_name{
+  text-align: center;
+}
+.nav{
+  border: none;
+  display: flex;
+  flex-direction: column;
+  flex:2;
+}
+.nav_app{
+  flex:1;
+}
+.nav_app > div{
+  color:gray;
+  padding-top: 40px;
+  font-size: 10pt;
+  -webkit-padding-start: 0px;
+  margin-left: 20px;
+}
+.nav_app > ul{
+  list-style: none;
+  -webkit-padding-start: 10px;
+  margin-right: 10px;
+  font-size: 12pt;
+  font-family: 'Exo', sans-serif;
+}
+.nav__list{
+  color:gray;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  margin: 7px 0px;
+  font-family: 'Exo', sans-serif;
+}
+.nav__index{
+  font-family: 'Exo', sans-serif;
+}
+.nav__list:hover{
+  background-color: rgba(255, 255, 255, 0.5);
+  color:black;
+}
+.nav__list > a{
+  width:100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color:gray;
+}
+.nav__list > a > div{
+  margin-top: 9px;
+
+}
+
+
+.nav__list > a > img{
+  padding-right: 10px;
+  padding-top: 5px;
+  width:25px;
+}
+.nav_users{
+  flex:1;
+}
+.footer{
+  flex-basis: 70px; flex-shrink: 1;
+  color:gray;
+  font-size: 10pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer > span{
+  padding: 0px 7px 0px 7px;
+}
+.footer > span > a{
+  color:gray;
+  text-decoration:none
+}

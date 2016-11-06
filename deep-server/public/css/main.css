@@ -1,0 +1,242 @@
+@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+/*div{ border: 1px solid gray; }*/
+body{
+  margin: 0;
+  padding: 0;
+}
+/*MOBILE VIEW*/
+
+
+body, html{
+  margin: 0px;
+  padding: 0px;
+}
+.messagesPage .container {
+  display: flex;
+  flex-direction: column;
+}
+
+.messagesPage .content{
+  display: flex;
+  flex-direction:row;
+  flex:5;
+}
+.messagesPage .article{
+  flex:7;
+  display: flex;
+  flex-direction: row;
+}
+.messagesPage .main{
+  display: flex;
+  flex-direction:row;
+  width:100%;
+}
+.chatView{
+  display: flex;
+  flex-direction:column;
+  flex:3;
+}
+
+.chatHeader{
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  display: flex;
+  background-color: #F7F8FA;
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.backButton{
+  margin-left: 5px;
+}
+.backButton > img{
+  width:30px;
+  height: 30px;
+}
+.partnerView{
+  flex:5;
+  text-align: center;
+  font-size: 13pt;
+  font-family: 'Exo', sans-serif;
+}
+.menuButton{
+  margin-right: 10px;
+}
+
+.chatIndexBOX{
+  background-color: #fbfbfb;
+  flex:1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.chatIndex{
+  width:100%;
+  /*background-color: rgb(247, 247, 247);*/
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.chatMessage{
+  display: flex;
+}
+.me{
+  flex-direction: row-reverse;
+}
+.you{
+  flex-direction: row;
+}
+.you > .chatValue{
+  background-color: rgb(236, 236, 236);
+  border: 1px solid rgb(239, 239, 239);
+  border-radius: 10px 10px 10px 0px;
+  color:rgb(66, 68, 67);
+}
+.me > .chatValue{
+  background-color:#66A8CF;
+  border-radius: 10px 10px 0px 10px;
+  color:white;
+}
+.chatValue{
+  margin: 10px;
+  padding: 10px;
+  border-radius: 2px;
+  display: inline-flex;
+}
+
+.chatFooter{
+  border: 1px solid lightgray;
+  background-color: #F7F8FA;
+  flex-basis: 70px;
+  flex-shrink: 1;
+  display: flex;
+}
+.chatInput{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    /*justify-content: center;*/
+    flex:7;
+}
+.chatInput > input{
+  font-size: 10pt;
+  height: 30px;
+  width:95%;
+  outline-style: none;
+  border: 1px solid lightgray;
+  padding-left: 10px;
+  margin-left: 10px;
+  background-color: #FBFBFB;
+}
+.chatSend{
+  display: flex;
+  align-items: center;
+  flex-basis: 90px;
+  flex-shrink: 1;
+}
+.chatSend > button{
+  padding: 0px 20px;
+  height: 34px;
+  font-size: 10pt;
+  background-color:#66A8CF;
+  border: none;
+  color:white;
+  outline-style: none;
+  font-family: 'Exo', sans-serif;
+}
+
+/* ASIDE BAR!!*/
+
+.asideBar{
+  border: 1px solid lightgray;
+  background-color: #F7F8FA;
+  flex-basis: 250px;
+  flex-shrink: 1;
+}
+.search{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+.search > img{
+  width:20px;
+  height: 20px;
+  margin-left: 15px;
+}
+.search > input{
+  border: none;
+  outline: inherit;
+  height: 30px;
+  font-size: 10pt;
+  width:100%;
+  background-color: #F7F8FA;
+  margin-left: 10px;
+}
+.usersList{
+  -webkit-padding-start: 0px;
+  margin: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 500px;
+  list-style: none;
+}
+.usersBox{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding: 15px 10px;
+}
+.usersProfile{
+  border-radius: 100%;
+  flex-basis: 50px;
+  height: 50px;
+  flex-shrink: 1;
+  background-color: black;
+  margin-left: 5px;
+}
+
+.usersBox:hover{
+  background-color: rgb(247, 247, 247);
+}
+.usersIndex{
+  flex:1;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.usersName{
+}
+.usersCountry{
+  color:gray;
+  font-size: 8pt;
+}
+.usersOther{
+  flex-basis: 50px;
+  height: 50px;
+  flex-shrink: 1;
+}
+.usersTime
+{
+  font-size: 9pt;
+  color:gray;
+}
+.usersAlarm{
+  display: flex;
+  align-items: center;
+  float: right;
+  margin-top: 8px;
+}
+.usersAlarmBOX{
+  align-items: center;
+  border-radius: 13px;
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color:white;
+  font-size: 10pt;
+  text-align: center;
+  background-color: rgb(237, 49, 36);
+}

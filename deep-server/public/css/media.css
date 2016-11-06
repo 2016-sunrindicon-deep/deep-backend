@@ -1,0 +1,92 @@
+@media (max-width:600px) {
+  .asideBar{
+      flex-basis: 0px;
+      display: none;
+  }
+  .chatHeader{
+    flex-basis: 55px;
+  }
+  .header{
+    display: none;
+  }
+  .menuButton{
+    display: block;
+    margin-left: 10px;
+  }
+  .menuButton > img{
+    display: block;
+    width:30px;
+    height: 30px;
+  }
+  .close .sideBar{
+    left: -203px;
+  }
+  .open .sideBar{
+    left: 0px;
+  }
+  .sideBar{
+    position: absolute;
+    width:200px;
+  }
+  .menuButton{
+    display: flex;
+  }
+}
+/*TABLET VIEW*/
+@media (min-width:600px) and (max-width:800px) {
+  .menuButton{
+    display: none;
+  }
+  .asideBar{
+    flex-basis: 225px;
+  }
+  .chatHeader{
+    flex-basis: 60px;
+  }
+  .close .sideBar{
+    left: -203px;
+  }
+  .open .sideBar{
+    left: 0px;
+  }
+  .sideBar{
+    position: absolute;
+    width:200px;
+    -webkit-transition-duration: 0.4s;
+    -moz-transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    z-index: 2;
+  }
+  .header{
+    display: flex;
+    flex-basis: 70px;
+    border: none;
+  }
+  .backButton{
+    display: none;
+  }
+}
+/*PC SCREEN VIEW*/
+@media (min-width:800px) {
+  .menuButton{
+    display: none;
+  }
+  .backButton{
+    display: none;
+  }
+  .open .sideBar{
+    margin-left: 0px;
+  }
+  .close .sideBar{
+    margin-left: -203px;
+  }
+  .header{
+    display: flex;
+    flex-basis: 70px;
+    /*border: 1px solid lightgray;*/
+  }
+  .chatHeader{
+    flex-basis: 60px;
+  }
+}

@@ -7,11 +7,20 @@
     <!-- <meta name="viewport" content="width=width-divice initail-scale=1.0"> -->
     <script src="/socket.io/socket.io.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <script src="/js/main.js" charset="utf-8"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//googleknowledge.github.io/qlabel/src/jquery.qlabel.js"></script>
+    <script src="/js/socket.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="/css/main.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/header.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/sider.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/media.css" media="screen" title="no title">
+    <!-- <link rel="stylesheet" href="/css/profile.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/settings.css" media="screen" title="no title">
+    <link rel="stylesheet" href="/css/home.css" media="screen" title="no title"> -->
+    <script src="/js/main.js" charset="utf-8"></script>
   </head>
-  <body>
+  <body class="messagesPage" >
     <div class="container">
       <header class="header">
         <div class="headTitle">
@@ -46,7 +55,7 @@
 
         </div> -->
       </header>
-      <div class="content">
+      <div class="content open">
         <div class="sideBar" style="">
           <div class="profile">
             <div class="profile_img">
@@ -54,8 +63,7 @@
             </div>
             <div class="profile_index">
               <div class="profile_name">
-                <%= Username %>
-                <% nickname = Username%>
+                <%=Username%>
               </div>
               <div class="profile_country">
                 <%= Country %>
@@ -64,13 +72,12 @@
 
           </div>
           <div class="nav">
-
             <div class="nav_app">
               <ul>
-                <li class="nav__list"><img src="/img/icon/home.png"><div class="nav__index">Home</div></li>
-                <li class="nav__list"><img src="/img/icon/profile.png"><div class="nav__index">Profile</div></li>
-                <li class="nav__list"><img src="/img/icon/chat.png"><div class="nav__index">Messages</div></li>
-                <li class="nav__list"><img src="/img/icon/setting.png"><div class="nav__index">Settings</div></li>
+                <li class="nav__list nav_home"><a href="/home"><img src="/img/icon/home.png"><div class="nav__index">Home</div></a></li>
+                <li class="nav__list nav_profile"><a href="/profile"><img src="/img/icon/profile.png"><div class="nav__index">Profile</div></a></li>
+                <li class="nav__list nav_messages"><a href="/messages"><img src="/img/icon/chat.png"><div class="nav__index">Messages</div></a></li>
+                <li class="nav__list nav_settings"><a href="/settings"><img src="/img/icon/setting.png"><div class="nav__index">Settings</div></a></li>
               </ul>
             </div>
             <div class="nav_users">
@@ -78,79 +85,69 @@
             </div>
           </div>
           <footer class="footer">
-            <span><a href="#">Help</a></span>
-            <span><a href="#">About</a></span>
-            <span><a href="#">Developer</a></span>
+            <span><a href="#" class="helpText">Help</a></span>
+            <span><a href="#" class="aboutText">About</a></span>
+            <span><a href="#" class="devText">Developer</a></span>
           </footer>
         </div>
         <!-- 상단 헤드 -->
 
         <!-- 메인 -->
-        <div class="chatting">
-          <div class="asideBar">
-            <div class="search">
-              <img src="/img/icon/searchGray.png" alt="" />
-              <input type="text" name="name" value="" placeholder="Search users">
-            </div>
-            <ul class="usersList">
-              <li class="usersBox">
-                <div class="usersProfile">
-                  <img src="" alt="" />
+        <article class="article">
+          <div class="main">
+            <div class="chatView">
+              <div class="chatHeader">
+                <div class="backButton">
+                  <!-- <input type="button" name="backButton" class="backButton_btn" value="Back"></input> -->
+                  <img src="/img/icon/backBtn.png" alt="backBtn" name="backButton" class="backButton_btn" />
                 </div>
-                <div class="usersIndex">
-                  <div class="usersName">
-                    Parktaejoon
-                  </div>
-                  <div class="usersCountry">
-                    KOREA
-                  </div>
-               </div>
-              </li>
-            </ul>
-          </div>
-          <div class="chatView">
-            <div class="chatHeader">
-              <!-- <div class="backButton">
-                <input type="button" name="backButton" class="backButton_btn" value="Back"></input>
-              </div> -->
-              <!-- <div class="menuButton">
-                <img src="/img/icon/menu2.png" alt="menu" class="openSideBar_img"/>
-              </div> -->
-              <div class="partnerView">
-                Youngchae Yoon
-              </div>
-              <!-- <div class="viewProfile">
-                <input type="button" name="viewProfile" class="viewProfile_btn" value="View Profile"></input>
-              </div> -->
+                <div class="partnerView">
+                  SYSTEM
+                </div>
+                <div class="menuButton">
+                  <img src="/img/icon/menu_M.png" alt="menu" class="openSideBar_img"/>
+                </div>
+                <!-- <div class="viewProfile">
+                  <input type="button" name="viewProfile" class="viewProfile_btn" value="View Profile"></input>
+                </div> -->
 
-            </div>
-            <div class="chatIndex">
+              </div>
+              <div class="chatIndexBOX" style="overflow-y:auto;">
+                <div class="chatIndex chatIndexStatic">
 
-              <div class="chatMessage you">
-                <div class="chatValue">
-                  Hello world!
                 </div>
               </div>
-              <div class="chatMessage me">
-                <div class="chatValue">
-                  Hello world!
+              <form class="chatFooter">
+                <div class="chatInput">
+                  <input type="text" name="charInput" value="" placeholder="Type your message" id="m" autocomplete="Off">
                 </div>
-              </div>
+                <div class="chatSend">
+                  <button type="button" name="name">Send</button>
+                </div>
+              </form>
             </div>
-            <form class="chatFooter">
-              <div class="chatInput">
-                <input type="text" name="charInput" value="" placeholder="Type your message" id="m" autocomplete="Off">
+
+            <!-- 오른쪽 유저리스트 사이드바 -->
+            <div class="asideBar">
+              <div class="search">
+                <img src="/img/icon/searchGray.png" alt="" />
+                <input type="text" name="name" value="" placeholder="Search users" autocomplete="off">
               </div>
-              <div class="chatSend">
-                <button type="button" name="name">Send</button>
-              </div>
-            </form>
+              <ul class="usersList">
+                <!-- <li class="usersBox">
+                     <div class="usersProfile">
+                       <img src="" alt="" />
+                     </div>
+                     <div class="usersIndex">
+                       <div class="usersName">박규동동동</div>
+                       <div class="usersCountry">KOREA</div>
+                     </div>
+                </li> -->
+              </ul>
+            </div>
 
           </div>
-
-          <!-- 오른쪽 유저리스트 사이드바 -->
-
-        </div>
+        </article>
       </div>
     </div>
 

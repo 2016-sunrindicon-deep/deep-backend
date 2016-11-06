@@ -1,0 +1,222 @@
+@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+html, body{
+  width:100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+
+}
+body{
+  background-color: #000;
+}
+/*@-webkit-keyframes fadeinout {
+0%,100% { opacity: 0; }
+50% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+0%,100% { opacity: 0; }
+50% { opacity: 1; }
+}*/
+
+@media (max-width:600px) and (max-height:400px){
+  .login{
+    margin-bottom: 0%;
+  }
+  .control-group {
+    margin-bottom: 17px;
+  }
+  .app-title{
+    margin-bottom: 0%;
+  }
+}
+@media (max-width:600px) and (min-height:400px){
+  .login{
+    margin-bottom: 15%;
+  }
+  .control-group {
+    margin-bottom: 17px;
+  }
+  .app-title{
+    margin-bottom: 10%;
+  }
+}
+@media (min-width:600px){
+  .control-group {
+    margin-bottom: 10px;
+  }
+}
+.signupBtn{
+  width:85%;
+}
+.email{
+
+}
+#stop{
+  position: fixed;
+  right: 0;
+  top:0;
+  padding: 10px;
+  z-index: 100;
+}
+.background{
+  /*background-image: url(ex4.jpg);*/
+  height: 100%;
+  width:100%;
+  filter: blur(0px) grayscale(20%);
+  z-index: 0;
+  background-size: cover;
+  /*-webkit-animation: fadeinout 4s linear forwards;
+  animation: fadeinout 4s linear forwards;*/
+}
+.cover{
+  background-color: rgba(0, 0, 0, 0.15);
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position:absolute;
+   left:0;
+   top:0;
+}
+.login_cover{
+  z-index:2;
+  width:100%;
+  height: 100%;
+  position:absolute;
+  display: flex;
+   right:0;
+   top:0;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+
+
+}
+.title{
+  text-align: center;
+}
+/*.put{
+  width:60%;
+  position: absolute;
+
+}*/
+
+
+*:focus {
+	outline: none;
+}
+body {
+font-family: Arial;
+
+}
+.login {
+/*margin: 20px auto;*/
+width: 300px;
+/*padding-top: 5%;*/
+
+
+
+
+}
+.login-screen {
+  /*margin:  100px 0px;*/
+  width: 300px;
+  /*height: 300px;*/
+
+}
+
+.app-title {
+text-align: center;
+
+}
+.app-title > h1{
+  color:white;
+}
+#here{
+  color:rgb(30, 119, 236);
+  font-family: 'Exo', sans-serif;
+}
+#title{
+  font-size: 40pt;
+  font-family: 'Exo', sans-serif;
+}
+
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-left: auto;
+margin-right: auto;
+}
+
+input {
+  text-align: center;
+  background-color:transparent;
+  border: 2px solid white;
+  font-family: 'Exo', sans-serif;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 200;
+  padding: 10px 0;
+  width: 250px;
+  color:white;
+  transition: border .5s;
+}
+
+.login-field:focus {
+border: 2px solid rgb(30, 119, 236);
+box-shadow: none;
+}
+.login-field-icon{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.btn {
+  border: 2px solid transparent;
+  background: rgb(30, 119, 226);;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 5px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 4px;
+  box-shadow: none;
+  transition: 0.25s;
+  cursor:pointer;
+  width:41%;
+  margin: 0px 2px;
+  font-family: 'Exo', sans-serif;
+}
+h2{
+  font-family: 'SourceSansPro', sans-serif;
+}
+.log:hover {
+  background-color: rgb(10, 100, 200);
+  border: 2px solid rgb(10, 100, 200);
+}
+.sign:hover {
+  background-color: rgb(210, 210, 210);
+  border: 2px solid rgb(210, 210, 210);
+}
+
+.login-link {
+  font-size: 12px;
+  color: #444;
+  display: block;
+	margin-top: 12px;
+}
+ul{
+  list-style: none;
+}
+.sign{
+  border: 2px solid white;
+  background-color: white;
+  color:black;
+  /*background: transparent;*/
+}
+#sub_title{
+  color:white;
+}
