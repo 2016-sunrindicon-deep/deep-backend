@@ -10,7 +10,6 @@ var debug = require('debug')('deep:server');
 var http = require('http');
 
 var unirest = require('unirest');
-var async = require('async');
 /**
  * Get port from environment and store in Express.
  */
@@ -111,242 +110,87 @@ io.on('connection', function(socket) {
     });
 
     //message event
-    // socket.on('chat message', function(data) {
-    //     var chat = new Chats({
-    //         id: room_id,
-    //     });
-    //
-    //     Chats.findOne({ id: room_id}, (err, result) => {
-    //         if (err) {
-    //             console.log("DB err");
-    //             throw err;
-    //         }
-    //         if (result) {
-    //             Users.findOne({user_id: socket.user_id}, function(err, users){
-    //                 if(err) return;
-    //                   for (var j = 0; j < users.talk.length; j++) {
-    //                      if(users.talk[j].token == room_id){
-    //                         Users.findOne({user_id: users.talk[j].id}, function(err, user){
-    //                           console.log("asdfasfd",user);
-    //                           var v = user.Country;
-    //
-    //
-    //                         });
-    //                         break;
-    //                      }
-    //                   }
-    //             });
-    //         } else {
-    //             // chat.des.push(data.user + " : " + msg);
-    //             chat.save((err) => {
-    //                 if (err) {
-    //                     console.log("DB save err");
-    //                     throw err;
-    //                 } else {
-    //                     console.log("Saved Okay");
-    //                 }
-    //             });
-    //         }
-    //     });
-    //     socket.emit('my message', data.user + " : " + data.msg);
-    //     console.log('msg : ' + data.msg + '   username : ' + data.user);
-    //
-    //     // Users.find({}, function(err, users) {
-    //     //     for (var i = 0; i < users.length; i++) {
-    //     //         for (var j = 0; j < users[i].talk.length; j++) {
-    //     //             if (users[i].talk[j].token == room_id) {
-    //     //                 Users.findOne({
-    //     //                     user_id: users[i].talk[j].id
-    //     //                 }, function(err, user) {
-    //     //                     if (err);
-    //     //                     // console.log("Find User", user);
-    //     //                 });
-    //     //                 break;
-    //     //             }
-    //     //         }
-    //     //     }
-    //     // });
-    //
-    //
-    //
-    // });
-    socket.on('chat message',function(data){
-      var chat = new Chats({
-        id : room_id,
-      })
-      Users.findOne({"user_id" : socket.user_id}).exec().then(function(user) {
-        console.log(user.Country);
-        if(user.Country == "ko"){
-          console.log("*** My Country is ko ***");
-          async.waterfall([
-            function(callback) {
-              console.log("1.text To En");
-              unirest.post('https://openapi.naver.com/v1/language/translate')
-                                            .headers({
-                                                'Content-Type': 'application/x-www-form-urlencoded',
-                                                'X-Naver-Client-Id': 'VAdnehFul6TcOL1mFpRP',
-                                                'X-Naver-Client-Secret': 'uPlTIn2yI6'
-                                            })
-                                            .send('source=ko')
-                                            .send('target=en')
-                                            .send('text=' + data.msg)
-                                            .end(function(res) {
-                                                callback(null,res.body.message.result.translatedText);
-                                            });
-            },
-            function(text,callback) {
-              console.log("2. save text");
-              Chats.findOne({id : room_id}, (err, result) => {
-                if(err){
-                  console.log("DB err");
-                  throw err;
-                }
-                if(result){
-                  result.des.push(data.user + " : "+text);
-                  result.save((err) => {
-                    if(err){
-                      console.log("DB err");
-                      throw err;
-                    }
-                  });
-                }else{
-                  chat.des.push(data.user + " : "+text);
-                  chat.save((err) => {
-                    if(err){
-                      console.log("DB save err");
-                      throw err;
-                    }else{
-                      console.log("Saved Okay");
-                    }
-                  });
-                }
-              });
-              callback(null,text)
-            },
-            function(text,callback) {
-              console.log("3.find target id");
-              // console.log("my room id : ", room_id);
-              var promise = Users.find({"talk" : {$elemMatch : { "token" : room_id}}}).select({"user_id" : true, "_id" : false}).exec()
-              promise.then(function(users) {
-                for(user of users){
-                  if(user.user_id != socket.user_id){
-                    // console.log("!!!",user.user_id);
-                    callback(null,user.user_id);
-                  }
-                }
-              })
-            },
-            function(tID, callback) {
-              console.log(" == " ,tID);
-              var pro = Users.findOne({"user_id" : tID}).exec()
-              pro.then(function(tUser) {
-                  // console.log(tUser);
-                  if(tUser.Country != "ko"){
-                    unirest.post('https://openapi.naver.com/v1/language/translate')
-                                                  .headers({
-                                                      'Content-Type': 'application/x-www-form-urlencoded',
-                                                      'X-Naver-Client-Id': 'VAdnehFul6TcOL1mFpRP',
-                                                      'X-Naver-Client-Secret': 'uPlTIn2yI6'
-                                                  })
-                                                  .send('source=ko')
-                                                  .send('target='+tUser.Country)
-                                                  .send('text=' + data.msg)
-                                                  .end(function(res) {
-                                                      callback(null,res.body.message.result.translatedText);
-                                                  });
-                  }else{
-                    callback(null, data.msg)
-                  }
-              })
-            },
-            function(tText, callback) {
-              console.log("4.Send text To target");
-               socket.broadcast.to(room_id).emit('chat message',{
-                msg : tText,
-                name : data.user
-              })
-              callback("end")
+    socket.on('chat message', function(data) {
+        var chat = new Chats({
+            id: room_id,
+        });
+
+        Chats.findOne({
+            id: room_id
+        }, (err, result) => {
+            if (err) {
+                console.log("DB err");
+                throw err;
             }
-          ],function(err, result) {
-            console.log('5.Send Text To me');
-            socket.emit('my message', data.user + " : "+data.msg )
-          })
-        }else{
-          console.log("*** My Country is en ***");
-          async.waterfall([
-            function(callback) {
-              console.log("1. save text");
-              Chats.findOne({id : room_id}, (err, result) => {
-                if(err){
-                  console.log("DB err");
-                  throw err;
-                }
-                if(result){
-                  result.des.push(data.user + " : "+data.msg);
-                  result.save((err) => {
-                    if(err){
-                      console.log("DB err");
-                      throw err;
+            if (result) {
+                Users.findOne({
+                    user_id: socket.user_id
+                }, function(err, users) {
+                    if (err) return;
+                    for (var j = 0; j < users.talk.length; j++) {
+                        if (users.talk[j].token == room_id) {
+                            Users.findOne({
+                                user_id: users.talk[j].id
+                            }, function(err, user) {
+                                console.log("asdfasfd", user);
+                                var v = user.Country;
+
+                                unirest.post('https://openapi.naver.com/v1/language/translate')
+                                    .headers({
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'X-Naver-Client-Id': 'VAdnehFul6TcOL1mFpRP',
+                                        'X-Naver-Client-Secret': 'uPlTIn2yI6'
+                                    })
+                                    .send('source=' + users.Country)
+                                    .send('target=' + v)
+                                    .send('text=' + data.msg)
+                                    .end(function(res) {
+                                        msg = res.body.message.result.translatedText;
+
+                                        console.log("change", msg);
+                                        socket.broadcast.to(room_id).emit('chat message', {
+                                            name: socket.user_id,
+                                            msg: msg
+                                        })
+                                    });
+                            });
+                            break;
+                        }
                     }
-                  });
-                }else{
-                  chat.des.push(data.user + " : "+data.msg);
-                  chat.save((err) => {
-                    if(err){
-                      console.log("DB save err");
-                      throw err;
-                    }else{
-                      console.log("Saved Okay");
+                });
+            } else {
+                // chat.des.push(data.user + " : " + msg);
+                chat.save((err) => {
+                    if (err) {
+                        console.log("DB save err");
+                        throw err;
+                    } else {
+                        console.log("Saved Okay");
                     }
-                  });
-                }
-              });
-              callback(null,data.msg)
-            },
-            function(text,callback) {
-              console.log("2.find target id");
-              var promise = Users.find({"talk" : {$elemMatch : { "token" : room_id}}}).select({"user_id" : true, "_id" : false}).exec()
-              promise.then(function(users) {
-                var tId
-                for(user of users){
-                  if(user.user_id != socket.user_id){
-                    callback(null,user.user_id);
-                  }
-                }
-              })
-            },
-            function(tID, callback) {
-              console.log(" == " ,tID);
-              var pro = Users.findOne({"user_id" : tID}).exec()
-              pro.then(function(user) {
-                unirest.post('https://openapi.naver.com/v1/language/translate')
-                                              .headers({
-                                                  'Content-Type': 'application/x-www-form-urlencoded',
-                                                  'X-Naver-Client-Id': 'VAdnehFul6TcOL1mFpRP',
-                                                  'X-Naver-Client-Secret': 'uPlTIn2yI6'
-                                              })
-                                              .send('source=en')
-                                              .send('target='+user.Country)
-                                              .send('text=' + data.msg)
-                                              .end(function(res) {
-                                                  callback(null,res.body.message.result.translatedText);
-                                              });
-              })
-            },
-            function(tText, callback) {
-              console.log("3.Send text To target");
-               socket.broadcast.to(room_id).emit('chat message',{
-                msg : tText,
-                name : data.user
-              })
-              callback("end")
+                });
             }
-          ],function(err, result) {
-              console.log('4.Send Text To me');
-              socket.emit('my message', data.user + " : "+data.msg )
-          })
-        }
-      })
+        });
+        socket.emit('my message', data.user + " : " + data.msg);
+        console.log('msg : ' + data.msg + '   username : ' + data.user);
+
+        // Users.find({}, function(err, users) {
+        //     for (var i = 0; i < users.length; i++) {
+        //         for (var j = 0; j < users[i].talk.length; j++) {
+        //             if (users[i].talk[j].token == room_id) {
+        //                 Users.findOne({
+        //                     user_id: users[i].talk[j].id
+        //                 }, function(err, user) {
+        //                     if (err);
+        //                     // console.log("Find User", user);
+        //                 });
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // });
+
+
+
     });
 
     //change room
