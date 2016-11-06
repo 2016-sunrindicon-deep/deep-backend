@@ -1,5 +1,5 @@
 .sideBar{
-  background-color: rgb(236, 234, 234);
+  background-color: #F7F8FA;
   display: flex;
   box-shadow: 0px 1px 3px #888888;
   flex-basis: 200px;
@@ -63,6 +63,7 @@
   -webkit-padding-start: 10px;
   margin-right: 10px;
   font-size: 12pt;
+  font-family: 'Exo', sans-serif;
 }
 .nav__list{
   color:gray;
@@ -70,20 +71,25 @@
   align-items: center;
   padding: 8px;
   margin: 7px 0px;
+  font-family: 'Exo', sans-serif;
+}
+.nav__index{
+  font-family: 'Exo', sans-serif;
 }
 .nav__list:hover{
   background-color: rgba(255, 255, 255, 0.5);
   color:black;
 }
 .nav__list > a{
+  width:100%;
   display: flex;
   align-items: center;
   text-decoration: none;
+  color:gray;
 }
 .nav__list > a > div{
-  display: inline-block;
   margin-top: 9px;
-  color:gray;
+
 }
 
 

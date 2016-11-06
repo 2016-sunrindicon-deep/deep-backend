@@ -2,7 +2,9 @@
   flex-shrink: 1;
   flex-direction:row;
   z-index: 0;
-  background-color:rgb(102, 168, 207);
+  /*background-color:rgb(102, 168, 207);*/
+  /*background-color:rgb(37, 121, 238);?*/
+  background-color:#66A8CF;
   border: none;
 }
 .headTitle{
@@ -43,5 +45,7 @@
   display: flex;
   align-items: center;
   margin-right: 15px;
-
+}
+.topSearch p {
+  color:white;
 }

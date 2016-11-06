@@ -10,29 +10,44 @@ var sessionstore = require('sessionstore');
 var store = sessionstore.createSessionStore();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/deep');
+mongoose.connect('mongodb://localhost:27017/testdeep');
+mongoose.Promise = require('bluebird');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
 
+
 var app = express();
+var talkSchema = new mongoose.Schema({
+    id : {type : String},
+    token : {type : String},
+},{_id : false})
 
 var UserSchema = new mongoose.Schema({
     id:{type: Number},
     token:{type: String},
-    user_id:{type: String, required: true, unique: true},
+    user_id:{type: String, required: true, sparse: true, unique: true },
     pw:{type: String, required: true},
     email:{type: String},
-    Country: {type: String, default: "no country"},
+    Country: {type: String, default: "ko"},
     tag: [String],
-    online: {type: Boolean},
     firends: [String],
+
+    talk : [talkSchema]
 });
 
-Users = mongoose.model('users', UserSchema);
 
+var ChatSchema = new mongoose.Schema({
+  id : {type : String},
+  des : {type : Array}
+});
+
+
+Users = mongoose.model('users', UserSchema);
+Chats = mongoose.model('chats', ChatSchema);
+Talk = mongoose.model('talks', talkSchema);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,6 +66,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/chat', chat);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
