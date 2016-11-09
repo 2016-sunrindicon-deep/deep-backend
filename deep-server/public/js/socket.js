@@ -11,7 +11,9 @@ $(window).load(function() {
     console.log('socket online!');
     nickname = $('.profile_name').text().trim();
     var room_id = "main";
-    socket.emit('addUser', { name: nickname });
+    socket.emit('addUser', {
+        name: nickname
+    });
     socket.emit('change ', 'main');
 
     $('form').submit(function() {
@@ -25,31 +27,31 @@ $(window).load(function() {
         return false;
     });
 
-    $('.partnerView').on('click',function() {
-      alert(room_id);
+    $('.partnerView').on('click', function() {
+        alert(room_id);
     })
 
     socket.on('my message', function(data) {
         console.log("my message", data);
 
-          console.log("chat messag", data);
-          var t =""
-          t += "<div class='chatMessage me'>"
-          t += "  <div class='chatValue'>" + data + "</div>"
-          t += "</div>"
-          $('.chatIndexBOX').append(t)
-          // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
+        console.log("chat messag", data);
+        var t = ""
+        t += "<div class='chatMessage me'>"
+        t += "  <div class='chatValue'>" + data + "</div>"
+        t += "</div>"
+        $('.chatIndexBOX').append(t)
+            // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
 
     });
 
     socket.on('chat message', (data) => {
-      console.log("ㅁㄴㅇㄹㅁㄹ", data);
-      var t =""
-      t += "<div class='chatMessage you'>"
-      t += "  <div class='chatValue'>" + data.name + " : "+ data.msg + "</div>"
-      t += "</div>"
-      $('.chatIndexBOX').append(t)
-      // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
+        console.log("ㅁㄴㅇㄹㅁㄹ", data);
+        var t = ""
+        t += "<div class='chatMessage you'>"
+        t += "  <div class='chatValue'>" + data.name + " : " + data.msg + "</div>"
+        t += "</div>"
+        $('.chatIndexBOX').append(t)
+            // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
 
     })
 
@@ -61,31 +63,31 @@ $(window).load(function() {
         t += "  <div class='chatValue'>" + datas.nickname + "님이 입장하셨습니다</div>"
         t += "</div>"
         $('.chatIndexStatic').append(t)
-        for(data of datas.users){
-          $('.chatIndexBOX').append('<div class="chatIndex chatIndex_' + data.user_id + '"></div>');
-          $(".chatIndexBOX").scrollTop($(".chatIndex")[0].scrollHeight);
+        for (data of datas.users) {
+            $('.chatIndexBOX').append('<div class="chatIndex chatIndex_' + data.user_id + '"></div>');
+            $(".chatIndexBOX").scrollTop($(".chatIndex")[0].scrollHeight);
         }
         fnUpdateUserList(datas.users);
         // 유저리스트 업데이트
     });
 
-    socket.on('loading message', (data) =>{
-      console.log(data);
-      // $('.chatIndexStatic').empty()
-      var t = " "
-      for(des of data.des){
-        if(!des.indexOf(nickname)){
-          t += "<div class='chatMessage me'>"
-          t += "  <div class='chatValue'>" + des + "</div>"
-          t += "</div>"
-        }else{
-          t += "<div class='chatMessage you'>"
-          t += "  <div class='chatValue'>" + des + "</div>"
-          t += "</div>"
+    socket.on('loading message', (data) => {
+        console.log(data);
+        // $('.chatIndexStatic').empty()
+        var t = " "
+        for (des of data.des) {
+            if (!des.indexOf(nickname)) {
+                t += "<div class='chatMessage me'>"
+                t += "  <div class='chatValue'>" + des + "</div>"
+                t += "</div>"
+            } else {
+                t += "<div class='chatMessage you'>"
+                t += "  <div class='chatValue'>" + des + "</div>"
+                t += "</div>"
+            }
         }
-      }
-      $('.chatIndexBOX').append(t)
-      // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
+        $('.chatIndexBOX').append(t)
+            // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
     })
 
     // socket.on('user state', function(data) {
@@ -134,18 +136,17 @@ $(window).load(function() {
         //     }
         // }
         // $('.chatIndex_' + opponent).show();
-        $.post("http://iwin247.net:7727/chat",
-                {
-                  a : nickname,
-                  b : opponent
-                },function(data, status){
-                    // alert(data)
-                    room_id = data
-                    $('.chatIndexBOX').empty();
-                    $('.chatIndexBOX').append($('<li>').text("Now token : "+data));
-                    $('.chatIndexBOX').append($('<li>').text("My Name : "+nickname));
-                     socket.emit('change room', data)
-                });
+        $.post("http://iwin247.net:7727/chat", {
+            a: nickname,
+            b: opponent
+        }, function(data, status) {
+            // alert(data)
+            room_id = data
+            $('.chatIndexBOX').empty();
+            $('.chatIndexBOX').append($('<li>').text("Now token : " + data));
+            $('.chatIndexBOX').append($('<li>').text("My Name : " + nickname));
+            socket.emit('change room', data)
+        });
     });
 });
 
@@ -155,7 +156,7 @@ function fnUpdateUserList(userList) {
     var li = " "
 
     for (var i = 0; i < userList.length; i++) {
-        if(userList[i].user_id == nickname) continue;
+        if (userList[i].user_id == nickname) continue;
         li += '<li class="usersBox">'
         li += '     <div class="usersProfile">'
         li += '       <img src="" alt="" />'
