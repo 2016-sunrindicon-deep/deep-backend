@@ -5,6 +5,11 @@ router.get('/', function(req, res) {
     res.send('asdf');
 });
 
+router.post('/logout', function(req, res) {
+    req.session.destroy();
+    res.redirect('/');
+});
+
 router.post('/setting', function(req, res){
     var country = req.param('country');
     var user_id = req.param('user_id');
