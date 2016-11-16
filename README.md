@@ -18,6 +18,67 @@
 
     HTTP 403: Params Missing
     
+* POST /auth/login : Auto Login
+
+> Params
+
+    id_input : id [String]
+    
+    pw_input : pw [String]
+
+> Response
+
+    HTTP 200 : UserID and token
+
+    HTTP 401 : Access Denied
+    
+    
+    
+* POST /auth/signup : Auto Login
+
+> Params
+
+    id_input : id [String]
+    
+    pw_input : pw [String]
+    
+    email_input: email [String]
+
+> Response
+
+    HTTP 200 : UserID and token
+
+    HTTP 401 : Access Denied
+    
+    
+* POST /auth/auto : Auto Login
+
+> Params
+
+    token : token [String]
+
+> Response
+
+    HTTP 200 : UserID and token or apikey
+
+    HTTP 401 : Access Denied
+    
+    
+* POST /chat : Auto Login
+
+> Params
+
+    nickname : nickname [String]
+    
+    opponent : opponent [String]
+
+> Response
+
+    HTTP 200 :  retudata chating token and nickname
+
+    HTTP 401 : Access Denied
+    
+    
 ### User
 > id: user inherence id [Number]
 
