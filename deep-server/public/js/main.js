@@ -83,8 +83,6 @@ $(window).load(function(){
               user_id : $('.profile_name').text().trim(),
               country : $(this).attr('name').trim()
             },function(data, status){
-                // alert(data)
-                console.log("response:" + data);
             });
     if($(this).attr('name') == "korean")
     {

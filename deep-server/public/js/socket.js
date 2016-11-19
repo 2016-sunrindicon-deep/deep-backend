@@ -11,10 +11,7 @@ $(window).load(function() {
     console.log('socket online!');
     nickname = $('.profile_name').text().trim();
     var room_id = "main";
-    socket.emit('addUser', {
-        name: nickname
-    });
-    socket.emit('change ', 'main');
+    socket.emit('addUser', {name: nickname});
 
     $('form').submit(function() {
         if ($('#m').val().trim() != "" && opponent) {
@@ -58,11 +55,12 @@ $(window).load(function() {
     socket.on('user state', function(datas) {
         // 입장 알림
         console.log(datas);
-        var t = " "
-        t += "<div class='chatMessage you'>"
-        t += "  <div class='chatValue'>" + datas.nickname + "님이 입장하셨습니다</div>"
-        t += "</div>"
-        $('.chatIndexStatic').append(t)
+        var t = " ";
+        t += "<div class='chatMessage you'>";
+        t += "  <div class='chatValue'>" + datas.nickname + "님이 입장하셨습니다</div>";
+        t += "</div>";
+        $('.chatIndexStatic').append(t);
+
         for (data of datas.users) {
             $('.chatIndexBOX').append('<div class="chatIndex chatIndex_' + data.user_id + '"></div>');
             $(".chatIndexBOX").scrollTop($(".chatIndex")[0].scrollHeight);
@@ -74,19 +72,19 @@ $(window).load(function() {
     socket.on('loading message', (data) => {
         console.log(data);
         // $('.chatIndexStatic').empty()
-        var t = " "
+        var t = " ";
         for (des of data.des) {
             if (!des.indexOf(nickname)) {
-                t += "<div class='chatMessage me'>"
-                t += "  <div class='chatValue'>" + des + "</div>"
-                t += "</div>"
+                t += "<div class='chatMessage me'>";
+                t += "  <div class='chatValue'>" + des + "</div>";
+                t += "</div>";
             } else {
-                t += "<div class='chatMessage you'>"
-                t += "  <div class='chatValue'>" + des + "</div>"
-                t += "</div>"
+                t += "<div class='chatMessage you'>";
+                t += "  <div class='chatValue'>" + des + "</div>";
+                t += "</div>";
             }
         }
-        $('.chatIndexBOX').append(t)
+        $('.chatIndexBOX').append(t);
             // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
     })
 
@@ -105,15 +103,15 @@ $(window).load(function() {
 
     socket.on('left', function(data) {
         // 종료 알림
-        var t = " "
-        t += "<div class='chatMessage you'>"
-        t += "  <div class='chatValue'>" + data.nickname + "님이 퇴장하셨습니다</div>"
-        t += "</div>"
-        $('.chatIndexStatic').append(t)
+        var t = " ";
+        t += "<div class='chatMessage you'>";
+        t += "  <div class='chatValue'>" + data.nickname + "님이 퇴장하셨습니다</div>";
+        t += "</div>";
+        $('.chatIndexStatic').append(t);
         $('chatIndex_' + data.nickname).remove();
         var j = data.tmpUserList.indexOf(data.nickname);
         userCount.splice(j, 1);
-        console.log('left user!')
+        console.log('left user!');
         $(".chatIndexBOX").scrollTop($(".chatIndex")[0].scrollHeight);
         // 유저리스트 업데이트
         fnUpdateUserList(data.users);
@@ -153,25 +151,30 @@ $(window).load(function() {
 function fnUpdateUserList(userList) {
     $('.usersList').empty();
     console.log(userList);
-    var li = " "
+    var li = " ";
 
     for (var i = 0; i < userList.length; i++) {
         if (userList[i].user_id == nickname) continue;
-        li += '<li class="usersBox">'
-        li += '     <div class="usersProfile">'
-        li += '       <img src="" alt="" />'
-        li += '     </div>'
-        li += '     <div class="usersIndex">'
-        li += '       <div class="usersName">' + userList[i].user_id + '</div>'
-        li += '       <div class="usersCountry">KOREA</div>'
-        li += '     </div>'
-        li += '    <div class="usersOther">'
-        li += '      <div class="usersTime">'
-        li += '         오후 5:41'
-        li += '      </div>'
-        li += '    </div>'
-        li += '   </li>'
+        li += '<li class="usersBox">';
+        li += '     <div class="usersProfile">';
+        li += '       <img src="" alt="" />';
+        li += '     </div>';
+        li += '     <div class="usersIndex">';
+        li += '       <div class="usersName">' + userList[i].user_id + '</div>';
+        li += '       <div class="usersCountry">KOREA</div>';
+        li += '     </div>';
+        li += '    <div class="usersOther">';
+        li += '      <div class="usersTime">';
+        li += '         오후 5:41';
+        li += '      </div>';
+        li += '    </div>';
+        li += '   </li>';
     }
 
-    $('.usersList').append(li)
+    $('.usersList').append(li);
 }
+
+
+$(window).bind("beforeunload", function (){
+  socket.emit("disconnet");
+});

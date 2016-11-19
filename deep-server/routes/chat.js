@@ -1,18 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var randomString = require('randomstring');
 var async = require('async');
 
-router.post('/', function(req,res){
+
+function chat(app, db, rndstring){
+app.post('/chat', function(req,res){
 
   var a = req.param('a');
   var b = req.param('b');
   var isFound = false;
   var foundEnd = false;
 
-  var token = randomString.generate(13);
+  var token = rndstring.generate(13);
 
-  var promise1 = Users.find({"user_id": a, "talk" : {$elemMatch : {"id" : b}}}).exec();
+  var promise1 = db.Users.find({"user_id": a, "talk" : {$elemMatch : {"id" : b}}}).exec();
   promise1.then(function(user){
     // console.log(user);
     if(user.length > 0){
@@ -23,11 +22,11 @@ router.post('/', function(req,res){
   }).then(function(datas) {
       if(datas == null){
         console.log("datas is null");
-        Users.findOneAndUpdate({"user_id": a}, {$push : {talk : { "id" : b, "token" : token}}},(err) => {
+        db.Users.findOneAndUpdate({"user_id": a}, {$push : {talk : { "id" : b, "token" : token}}},(err) => {
               if(err) console.log("DB Err",err);
               else console.log("usdate sucess!");
             });
-        Users.find({"user_id" : a},function(err, result) {
+        db.Users.find({"user_id" : a},function(err, result) {
           console.log(result[0].talk);
         })
       }else{
@@ -35,7 +34,7 @@ router.post('/', function(req,res){
       }
   })
 
-  var promise2 = Users.find({"user_id": b, "talk" : {$elemMatch : {"id" : a}}}).exec();
+  var promise2 = db.Users.find({"user_id": b, "talk" : {$elemMatch : {"id" : a}}}).exec();
   promise2.then(function(user){
     // console.log(user);
     if(user.length > 0){
@@ -47,10 +46,10 @@ router.post('/', function(req,res){
       if(datas == null){
         console.log("datas is null");
         //update
-        return Users.findOneAndUpdate({"user_id": b}, {$push : {talk : { "id" : a, "token" : token}}},(err) => {
+        return db.Users.findOneAndUpdate({"user_id": b}, {$push : {talk : { "id" : a, "token" : token}}},(err) => {
               if(err) console.log("DB Err",err);
               else console.log("usdate sucess!");
-              return Users.find({"user_id" : b},function(err, result) {
+              return db.Users.find({"user_id" : b},function(err, result) {
                 for(data of result[0].talk){
                   if(data.id == a){
                     console.log("m Data " + data.token);
@@ -76,7 +75,7 @@ router.post('/', function(req,res){
 function find(a,b) {
   async.waterfall([
     function(callback) {
-      Users.find({"user_id": a, "talk" : {$elemMatch : {"id" : b}}}).exec( (err,datas) => {
+      db.Users.find({"user_id": a, "talk" : {$elemMatch : {"id" : b}}}).exec( (err,datas) => {
         // console.log(user);
         // console.log(datas.talk);
         if(datas.length > 0){
@@ -89,7 +88,7 @@ function find(a,b) {
     function(id, callback){
       // console.log("data found!", datas);
       console.log(id);
-      Users.findOne({"user_id" : id},(err, user)=>{
+      db.Users.findOne({"user_id" : id},(err, user)=>{
         if(err){
           console.log("DB err", err);
         }
@@ -111,7 +110,7 @@ function find(a,b) {
     if(err != null){
       //token update필요
       console.log("Not found Data! update start");
-      Users.findOneAndUpdate({"user_id": a}, {$push : {talk : { "id" : b, "token" : token}}},(err) => {
+      db.Users.findOneAndUpdate({"user_id": a}, {$push : {talk : { "id" : b, "token" : token}}},(err) => {
         if(err) console.log("DB Err");
         else console.log("update sucess!");
       });
@@ -120,5 +119,6 @@ function find(a,b) {
     }
   });
 }
+}
 
-module.exports = router;
+module.exports = chat;
