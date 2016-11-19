@@ -15,7 +15,6 @@ mongoose.Promise = require('bluebird');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-var users = require('./routes/users');
 var chat = require('./routes/chat');
 
 
@@ -63,7 +62,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use( session( { store: store, secret: '앙기모띠', saveUninitialized: true}));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/auth', auth);
 app.use('/chat', chat);
 

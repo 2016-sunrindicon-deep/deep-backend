@@ -44,9 +44,8 @@ router.post('/login', function(req, res) {
 
 router.post('/loginW', function(req, res) {
     if (req.body.id_input === "" || req.body.pw_input === "") {
-        res.redirect('/');
     } else {
-        Users.findOne({"user_id": req.body.id_input, "pw": req.body.pw_input}, function(err, member) {
+        Users.findOne({user_id: req.body.id_input, pw: req.body.pw_input}, function(err, member) {
             if (member) {
   	       res.status(200).json({user_id: member.user_id, token: member.token});
             }else{
@@ -118,4 +117,16 @@ router.post('/signupW', function(req, res) {
     }
 });
 
+router.post('/auto', function(req, res){
+  var token = req.body.token;
+
+  if(token === "" || token === null || token === undefined){
+    req.status(412).send("param err plz check it");
+  }
+
+  Users.findOne({token: token}, function(err, users) {
+    if(err) req.status(409).send("DB error");
+    if(users) req.status(200).json({user_id: users.user_id, token: users.token});
+  });
+});
 module.exports = router;

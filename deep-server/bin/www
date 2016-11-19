@@ -47,6 +47,10 @@ server.on('listening', onListening);
 var users = []; //현재 접속중인 유저 저장 배열
 var usernum = 0; //현재 접속중인 유저 수s
 
+app.post('/users', function(req, res){
+  req.send('asdf');
+});
+
 io.on('connection', function(socket) {
             var addedUser;
             var room_id; //현재 접속중 룸 아이디 default = main(메인에서는 다같이있어요)
