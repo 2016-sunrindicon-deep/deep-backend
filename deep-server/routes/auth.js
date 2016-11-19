@@ -1,33 +1,32 @@
-var express = require('express');
-var router = express.Router();
-var rndstring = require('randomstring');
+module.exports = auth;
 
-router.get('/', function(req, res) {
+function auth(app, db, rndstring){
+app.get('/auth', function(req, res) {
     res.send('asdf');
 });
 
-router.post('/logout', function(req, res) {
+app.post('/auth/logout', function(req, res) {
     req.session.destroy();
     res.redirect('/');
 });
 
-router.post('/setting', function(req, res){
+app.post('/auth/setting', function(req, res){
     var country = req.param('country');
     var user_id = req.param('user_id');
     console.log("강은솔"+user_id + country);
-    Users.update({user_id: user_id}, {$set: {Country: country}}, (err, result) => {
+    db.Users.update({user_id: user_id}, {$set: {Country: country}}, (err, result) => {
       if(err) ;
-      Users.findOne({user_id: user_id}, (err, users) => {
+      db.Users.findOne({user_id: user_id}, (err, users) => {
         if(result) return res.send(users);
       });
     });
 });
 
-router.post('/login', function(req, res) {
+app.post('/auth/login', function(req, res) {
     if (req.body.id_input === "" || req.body.pw_input === "") {
         res.redirect('/');
     } else {
-        Users.findOne({"user_id": req.body.id_input, "pw": req.body.pw_input}, function(err, member) {
+        db.Users.findOne({"user_id": req.body.id_input, "pw": req.body.pw_input}, function(err, member) {
             if (member) {
                     req.session.nickname = member.user_id;
                     req.session.country = member.Country
@@ -42,10 +41,10 @@ router.post('/login', function(req, res) {
 });
 
 
-router.post('/loginW', function(req, res) {
+app.post('/auth/loginW', function(req, res) {
     if (req.body.id_input === "" || req.body.pw_input === "") {
     } else {
-        Users.findOne({user_id: req.body.id_input, pw: req.body.pw_input}, function(err, member) {
+        db.Users.findOne({user_id: req.body.id_input, pw: req.body.pw_input}, function(err, member) {
             if (member) {
   	       res.status(200).json({user_id: member.user_id, token: member.token});
             }else{
@@ -55,7 +54,7 @@ router.post('/loginW', function(req, res) {
     }
 });
 
-router.post('/signup', function(req, res) {
+app.post('/auth/signup', function(req, res) {
     console.log(req.body);
     if (req.body.id_input === "" || req.body.pw_input === "" || req.body.mail_input === "") {
         console.log("asdf");
@@ -63,10 +62,10 @@ router.post('/signup', function(req, res) {
     } else {
        var user_id = req.body.id_input;
        var email = req.body.mail_input;
-       var pw = req.body.pw_input;
+      var pw = req.body.pw_input;
 
 
-        var current = new Users({
+        var current = new db.Users({
             user_id: user_id,
             email: email,
             pw: pw,
@@ -88,7 +87,7 @@ router.post('/signup', function(req, res) {
 });
 
 
-router.post('/signupW', function(req, res) {
+app.post('/auth/signupW', function(req, res) {
     if (req.body.id_input === "" || req.body.pw_input === "" || req.body.mail_input === "") {
         console.log("asdf");
         //res.redirect('/');
@@ -98,7 +97,7 @@ router.post('/signupW', function(req, res) {
        var pw = req.body.pw_input;
 
 
-        var current = new Users({
+        var current = new db.Users({
             user_id: user_id,
             email: email,
             pw: pw,
@@ -117,16 +116,16 @@ router.post('/signupW', function(req, res) {
     }
 });
 
-router.post('/auto', function(req, res){
+app.post('/auth/auto', function(req, res){
   var token = req.body.token;
 
   if(token === "" || token === null || token === undefined){
     req.status(412).send("param err plz check it");
   }
 
-  Users.findOne({token: token}, function(err, users) {
+  db.Users.findOne({token: token}, function(err, users) {
     if(err) req.status(409).send("DB error");
     if(users) req.status(200).json({user_id: users.user_id, token: users.token});
   });
 });
-module.exports = router;
+}

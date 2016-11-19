@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+module.exports = index;
 
-router.get('/', function(req, res) {
+function index(app, db) {
+app.get('/', function(req, res) {
     if (req.session.nickname) {
         res.redirect('messages');
     } else {
@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
     }
 });
 
-router.get('/profile', function(req, res) {
+app.get('/profile', function(req, res) {
     if (req.session.nickname) {
         res.render('profile', {
             title: "NO.w.HERE",
@@ -22,7 +22,7 @@ router.get('/profile', function(req, res) {
 });
 
 
-router.get('/home', function(req, res) {
+app.get('/home', function(req, res) {
     if (req.session.nickname) {
         res.render('home', {
             title: "NO.w.HERE",
@@ -34,7 +34,7 @@ router.get('/home', function(req, res) {
     }
 });
 
-router.get('/settings', function(req, res) {
+app.get('/settings', function(req, res) {
     if (req.session.nickname) {
         if (req.session.country === "no country") {
             res.render('settings', {
@@ -55,7 +55,7 @@ router.get('/settings', function(req, res) {
 
 });
 
-router.get('/messages', function(req, res) {
+app.get('/messages', function(req, res) {
     if (req.session.nickname) {
         if (req.session.country === "no country") {
             res.render('main', {
@@ -76,5 +76,4 @@ router.get('/messages', function(req, res) {
     }
 });
 
-
-module.exports = router;
+}

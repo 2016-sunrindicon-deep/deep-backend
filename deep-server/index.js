@@ -1,49 +1,42 @@
-#!/usr/bin/env node
+var port = 7727;
 
-/**
- * Module dependencies.
- */
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var cookie = require('cookie');
+var rndomstring = require('randomstring');
+var session = require('express-session');
+var sessionstore = require('sessionstore');
+var store = sessionstore.createSessionStore();
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var db = require('./mongo');
 
-var app = require('../app');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-var debug = require('debug')('deep:server');
-var http = require('http');
-
-var unirest = require('unirest');
-var async = require('async');
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '7727');
-app.set('port', port);
-
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * ADDED!! Require Socket.IO
- */
-var io = require('socket.io')(server);
+// uncomment after placing your favicon in /public
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use( session( { store: store, secret: '앙기모띠', saveUninitialized: true}));
 
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+require('./routes/index')(app, db);
+require('./routes/auth')(app, db, rndomstring);
+require('./routes/chat')(app, db);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * ADDED!! Socket.IO Connection.
  */
-
-
 var users = []; //현재 접속중인 유저 저장 배열
 var usernum = 0; //현재 접속중인 유저 수s
 
@@ -66,7 +59,7 @@ io.on('connection', function(socket) {
                 socket.join("mamin");
                 room_id = data;
 
-                Users.findOne({
+                db.Users.findOne({
                     user_id: socket.user_id
                 }, (err, result) => {
                     if (err) {
@@ -107,7 +100,6 @@ io.on('connection', function(socket) {
                             break;
                         }
                     }
-
                     socket.leave(room_id);
                     console.log('user disconnect : ' + socket.user_id);
 
@@ -123,10 +115,10 @@ io.on('connection', function(socket) {
 
             //message event
             socket.on('chat message', function(data) {
-                var chat = new Chats({
+                var chat = new db.Chats({
                     id: room_id,
                 })
-                Users.findOne({
+                db.Users.findOne({
                     "user_id": socket.user_id
                 }).exec().then(function(user) {
                     console.log(user.Country);
@@ -150,7 +142,7 @@ io.on('connection', function(socket) {
                             },
                             function(text, callback) {
                                 console.log("2. save text");
-                                Chats.findOne({
+                                db.Chats.findOne({
                                     id: room_id
                                 }, (err, result) => {
                                     if (err) {
@@ -182,7 +174,7 @@ io.on('connection', function(socket) {
                             function(text, callback) {
                                 console.log("3.find target id");
                                 // console.log("my room id : ", room_id);
-                                var promise = Users.find({
+                                var promise = db.Users.find({
                                     "talk": {
                                         $elemMatch: {
                                             "token": room_id
@@ -203,7 +195,7 @@ io.on('connection', function(socket) {
                             },
                             function(tID, callback) {
                                 console.log(" == ", tID);
-                                var pro = Users.findOne({
+                                var pro = db.Users.findOne({
                                     "user_id": tID
                                 }).exec()
                                 pro.then(function(tUser) {
@@ -238,93 +230,6 @@ io.on('connection', function(socket) {
                             console.log('5.Send Text To me');
                             socket.emit('my message', data.user + " : " + data.msg)
                         })
-                    } else {
-                        console.log("*** My Country is en ***");
-                        async.waterfall([
-                            function(callback) {
-                                console.log("1. save text");
-                                Chats.findOne({
-                                    id: room_id
-                                }, (err, result) => {
-                                    if (err) {
-                                        console.log("DB err");
-                                        throw err;
-                                    }
-                                    if (result) {
-                                        result.des.push(data.user + " : " + data.msg);
-                                        result.save((err) => {
-                                            if (err) {
-                                                console.log("DB err");
-                                                throw err;
-                                            }
-                                        });
-                                    } else {
-                                        chat.des.push(data.user + " : " + data.msg);
-                                        chat.save((err) => {
-                                            if (err) {
-                                                console.log("DB save err");
-                                                throw err;
-                                            } else {
-                                                console.log("Saved Okay");
-                                            }
-                                        });
-                                    }
-                                });
-                                callback(null, data.msg)
-                            },
-                            function(text, callback) {
-                                console.log("2.find target id");
-                                var promise = Users.find({
-                                    "talk": {
-                                        $elemMatch: {
-                                            "token": room_id
-                                        }
-                                    }
-                                }).select({
-                                    "user_id": true,
-                                    "_id": false
-                                }).exec()
-                                promise.then(function(users) {
-                                    var tId
-                                    for (user of users) {
-                                        if (user.user_id != socket.user_id) {
-                                            callback(null, user.user_id);
-                                        }
-                                    }
-                                })
-                            },
-                            function(tID, callback) {
-                                console.log(" == ", tID);
-                                var pro = Users.findOne({
-                                    "user_id": tID
-                                }).exec()
-                                pro.then(function(user) {
-                                    unirest.post('https://openapi.naver.com/v1/language/translate')
-                                        .headers({
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                            'X-Naver-Client-Id': 'VAdnehFul6TcOL1mFpRP',
-                                            'X-Naver-Client-Secret': 'uPlTIn2yI6'
-                                        })
-                                        .send('source=en')
-                                        .send('target=' + user.Country)
-                                        .send('text=' + data.msg)
-                                        .end(function(res) {
-                                            callback(null, res.body.message.result.translatedText);
-                                        });
-                                })
-                            },
-                            function(tText, callback) {
-                                console.log("3.Send text To target");
-                                socket.broadcast.to(room_id).emit('chat message', {
-                                    msg: tText,
-                                    name: data.user
-                                })
-                                callback("end")
-                            }
-                        ], function(err, result) {
-                            console.log('4.Send Text To me');
-                            socket.emit('my message', data.user + " : " + data.msg)
-                        })
                     }
                 })
             });
@@ -335,7 +240,7 @@ io.on('connection', function(socket) {
                     if (room_id) socket.leave(room_id);
                     socket.join(data);
                     room_id = data;
-                    Chats.findOne({
+                    db.Chats.findOne({
                             id: data
                         }, (err, result) => {
                             if (err) {
@@ -370,62 +275,39 @@ io.on('connection', function(socket) {
                     });
             });
 
-        /**
-         * Normalize a port into a number, string, or false.
-         */
 
-        function normalizePort(val) {
-            var port = parseInt(val, 10);
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-            if (isNaN(port)) {
-                // named pipe
-                return val;
-            }
+// error handlers
 
-            if (port >= 0) {
-                // port number
-                return port;
-            }
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
 
-            return false;
-        }
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
-        /**
-         * Event listener for HTTP server "error" event.
-         */
+module.exports = app;
 
-        function onError(error) {
-            if (error.syscall !== 'listen') {
-                throw error;
-            }
-
-            var bind = typeof port === 'string' ?
-                'Pipe ' + port :
-                'Port ' + port;
-
-            // handle specific listen errors with friendly messages
-            switch (error.code) {
-                case 'EACCES':
-                    console.error(bind + ' requires elevated privileges');
-                    process.exit(1);
-                    break;
-                case 'EADDRINUSE':
-                    console.error(bind + ' is already in use');
-                    process.exit(1);
-                    break;
-                default:
-                    throw error;
-            }
-        }
-
-        /**
-         * Event listener for HTTP server "listening" event.
-         */
-
-        function onListening() {
-            var addr = server.address();
-            var bind = typeof addr === 'string' ?
-                'pipe ' + addr :
-                'port ' + addr.port;
-            debug('Listening on ' + bind);
-        }
+http.listen(port, function(){
+    console.log('Safood Server running on Port ' + port);
+});
