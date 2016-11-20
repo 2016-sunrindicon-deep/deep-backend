@@ -34,6 +34,7 @@ app.use( session( { store: store, secret: '앙기모띠', saveUninitialized: tru
 require('./routes/index')(app, db);
 require('./routes/auth')(app, db, rndomstring);
 require('./routes/chat')(app, db, rndomstring);
+require('./routes/img')(app);
 
 
 /**

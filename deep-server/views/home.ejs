@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <!-- <meta name="viewport" content="width=width-divice initail-scale=1.0"> -->
     <script src="/socket.io/socket.io.js"></script>
@@ -12,112 +15,109 @@
     <link rel="stylesheet" href="/css/sider.css" media="screen" title="no title">
     <link rel="stylesheet" href="/css/home.css" media="screen" title="no title">
     <script src="/js/main.js" charset="utf-8"></script>
-  </head>
-  <body class="homePage">
+</head>
+
+<body class="homePage">
     <div class="container">
-      <header class="header">
-        <div class="headTitle">
-          <div class="openSideBar">
-            <img src="/img/icon/menu2.png" class="openSideBar_img" alt="" />
-          </div>
-          <div class="mainLogo">
-            <h1>NoW<span>here</span></h1>
-          </div>
+        <header class="header">
+            <div class="headTitle">
+                <div class="openSideBar">
+                    <img src="/img/icon/menu2.png" class="openSideBar_img" alt="" />
+                </div>
+                <div class="mainLogo">
+                    <h1>NoW<span>here</span></h1>
+                </div>
 
-          <div class="topSearch">
-            <img src="/img/icon/search.png" alt="" class="topSearchImg" />
-            <!-- <input type="input" name="name" value="" placeholder="search People"> -->
-          </div>
-        </div>
-      </header>
-      <div class="content">
-        <div class="sideBar" style="">
-          <div class="profile">
-            <div class="profile_img">
-              <img src="/img/icon/profile.jpg" alt="" />
+                <div class="topSearch">
+                    <img src="/img/icon/search.png" alt="" class="topSearchImg" />
+                    <!-- <input type="input" name="name" value="" placeholder="search People"> -->
+                </div>
             </div>
-            <div class="profile_index">
-              <div class="profile_name">
-                <%=Username%>
-              </div>
-              <div class="profile_country">
-                <%= Country %>
-              </div>
+        </header>
+        <div class="content">
+            <div class="sideBar" style="">
+                <div class="profile">
+                    <div class="profile_img">
+                        <img src=<%= img_url%> alt="" />
+                    </div>
+                    <div class="profile_index">
+                        <div class="profile_name">
+                            <%=Username%>
+                        </div>
+                        <div class="profile_country">
+                            <%= Country %>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="nav">
+
+                    <div class="nav_app">
+                        <ul>
+                            <li class="nav__list nav_home">
+                                <a href="/home"><img src="/img/icon/home.png">
+                                    <div class="nav__index">Home</div>
+                                </a>
+                            </li>
+                            <li class="nav__list nav_profile">
+                                <a href="/profile"><img src="/img/icon/profile.png">
+                                    <div class="nav__index">Profile</div>
+                                </a>
+                            </li>
+                            <li class="nav__list nav_messages">
+                                <a href="/messages"><img src="/img/icon/chat.png">
+                                    <div class="nav__index">Messages</div>
+                                </a>
+                            </li>
+                            <li class="nav__list nav_settings">
+                                <a href="/settings"><img src="/img/icon/setting.png">
+                                    <div class="nav__index">Settings</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav_users">
+
+                    </div>
+                </div>
+                <footer class="footer">
+                    <span><a href="#">Help</a></span>
+                    <span><a href="#">About</a></span>
+                    <span><a href="#">Developer</a></span>
+                </footer>
+            </div>
+            <article class="article">
+                <div class="main">
+                    <div id="columns">
+                      <%for(var i = 0; i<a_users.length; i++){%>
+                        <%if(a_users[i].Country === "ko"){%>
+                        <figure class="asd">
+                            <img src="/img/flag/ko.png">
+                            <figcaption>
+                                <div class="figureName"><%=a_users[i].user_id%></div>
+                                <%for(var j = 0; j<a_users[i].hashs.length; j++){%>
+                                  <div class="hash"><%a_users[i].hashs[j]%></div>
+                                <%}%>
+                            </figcaption>
+                        </figure>
+                        <%}else{%>
+                          <figure class="asd">
+                              <img src="/img/flag/usa.png">
+                              <figcaption>
+                                  <div class="figureName"><%=a_users[i].user_id%></div>
+                                  <%for(var j = 0; j<a_users[i].hashs.length; j++){%>
+                                    <div class="hash">#<%=a_users[i].hashs[j]%></div>
+                                  <%}%>
+                              </figcaption>
+                          </figure>
+                          <%}%>
+                        <%}%>
+                        </div>
+                        </div>
+            </article>
+            </div>
             </div>
 
-          </div>
-          <div class="nav">
-
-            <div class="nav_app">
-              <ul>
-                <li class="nav__list nav_home"><a href="/home"><img src="/img/icon/home.png"><div class="nav__index">Home</div></a></li>
-                <li class="nav__list nav_profile"><a href="/profile"><img src="/img/icon/profile.png"><div class="nav__index">Profile</div></a></li>
-                <li class="nav__list nav_messages"><a href="/messages"><img src="/img/icon/chat.png"><div class="nav__index">Messages</div></a></li>
-                <li class="nav__list nav_settings"><a href="/settings"><img src="/img/icon/setting.png"><div class="nav__index">Settings</div></a></li>
-              </ul>
-            </div>
-            <div class="nav_users">
-
-            </div>
-          </div>
-          <footer class="footer">
-            <span><a href="#">Help</a></span>
-            <span><a href="#">About</a></span>
-            <span><a href="#">Developer</a></span>
-          </footer>
-        </div>
-        <article class="article">
-          <div class="main">
-            <div id="columns">
-              <figure class="asd" style="display : none">
-                <img src="/img/flag/ko.png">
-                <figcaption><div class="figureName">asdf</div><div class="hash">#게임</div><div class="hash">#스포츠</div><div class="hash">#음악</div></figcaption>
-              </figure>
-
-              <figure class="asd" style="display : none">
-                <img src="/img/flag/jp.png">
-                <figcaption><div class="figureName">kkk</div><div class="hash">#독서  </div><div class="hash">#미술/div><div class="hash">#영화/div></figcaption>
-              </figure>
-              <figure>
-                <img src="/img/flag/pl.png">
-                <figcaption></figcaption>
-              </figure>
-
-              <figure>
-                <img src="/img/flag/usa.png">
-                <figcaption></figcaption>
-              </figure>
-
-              <figure>
-                <img src="/img/flag/ch.png">
-                <figcaption></figcaption>
-              </figure>
-              <figure>
-                <img src="/img/flag/pa.png">
-                <figcaption></figcaption>
-              </figure>
-
-              <figure>
-                <img src="/img/flag/et.png">
-                <figcaption></figcaption>
-              </figure>
-
-              <figure>
-                <img src="/img/flag/en.png">
-                <figcaption></figcaption>
-              </figure>
-
-              <figure>
-                <img src="/img/flag/zl.png">
-                <figcaption></figcaption>
-              </figure>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-  </body>
+</body>
 
 </html>
-

@@ -14,10 +14,10 @@ var UserSchema = new mongoose.Schema({
     pw:{type: String, required: true},
     email:{type: String},
     Country: {type: String, default: "ko"},
-    tag: [String],
     img_url: {type: String, default: "http://iwin247.net:7727/img/user/default"},
     firends: [String],
-    talk : [talkSchema]
+    talk: [talkSchema],
+    hashs: [String]
 });
 
 
