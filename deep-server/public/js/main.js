@@ -161,6 +161,7 @@ $(window).load(function(){
     bodyChecked = true;
   });
   $('.topSearch').click(function(){
+    $('.asd').show();
     jQuery.ajax({
           type:"GET",
           url:"/home",
@@ -170,7 +171,7 @@ $(window).load(function(){
                 // TODO
           },
           error : function(xhr, status, error) {
-                alert("에러발생");
+                alert("SAVE!");
           }
     });
     $(document).on('click', '.profile_img', function(){

@@ -37,7 +37,7 @@ $(window).load(function() {
         t += "  <div class='chatValue'>" + data + "</div>"
         t += "</div>"
         $('.chatIndexBOX').append(t)
-            // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
+            $(".chatIndexBOX").scrollTop($(".chatIndexBOX")[0].scrollHeight);
 
     });
 
@@ -48,7 +48,7 @@ $(window).load(function() {
         t += "  <div class='chatValue'>" + data.name + " : " + data.msg + "</div>"
         t += "</div>"
         $('.chatIndexBOX').append(t)
-            // $(".chatIndex").scrollTop($(".chatIndex")[0].scrollHeight);
+            $(".chatIndexBOX").scrollTop($(".chatIndexBOX")[0].scrollHeight);
 
     })
 
