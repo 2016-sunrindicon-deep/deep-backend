@@ -26,51 +26,7 @@ $(window).load(function() {
         location.href = "/settings"
         setLanguage();
     });
-    // $(document).click('.nav_app a', function(event){
-    //
-    //     console.log(event.target.id);
-    //
-    //     if(event.target.id == "home")
-    //     {
-    //       var className =  $('body').attr('class')
-    //       $('body').removeClass(className)
-    //       $('body').toggleClass('homePage')
-    //     }
-    //     else if (event.target.id == "profile")
-    //     {
-    //       var className =  $('body').attr('class')
-    //       $('body').removeClass(className)
-    //       $('body').toggleClass('profilePage')
-    //     }
-    //     else if (event.target.id == "message")
-    //     {
-    //       var className =  $('body').attr('class')
-    //       $('body').removeClass(className)
-    //       $('body').toggleClass('messagesPage')
-    //     }
-    //     else if (event.target.id == "setting")
-    //     {
-    //       var className =  $('body').attr('class')
-    //       $('body').removeClass(className)
-    //       $('body').toggleClass('settingsPage')
-    //     }
-    //     history.pushState(null, null, event.target.href);
-    //     $('article').load(event.target.href+' article>.main', function(){
-    //       setLanguage();
-    //     });
-    //     event.preventDefault();
-    // });
 
-    // $(window).on('popstate', function(event){
-    //   console.log(location);
-    //   var className =  $('body').attr('class')
-    //   var addClass = location.pathname;
-    //   addClass = addClass.replace('/', '');
-    //   $('body').removeClass(className);
-    //   $('body').toggleClass(addClass + 'Page');
-    //   $('article').load(location.href+' article>.main');
-    //
-    // });
     $(document).on('click', '.setBtn', function() {
         $('.setBtn').css('background-color', 'white');
         $('.setBtn').css('color', 'black')
@@ -169,7 +125,6 @@ $(window).load(function() {
                 alert("저장되었습니다");
           },
       });
-
     });
 });
 
@@ -271,3 +226,4 @@ function setLanguage() {
 
     }
 }
+
