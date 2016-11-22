@@ -1,9 +1,12 @@
 var async = require('async');
 
+module.exports = chat;
 
 function chat(app, db, rndstring){
-app.post('/chat', function(req,res){
 
+
+app.post('/chat', function(req,res){
+  console.log('asdf')
   var a = req.param('a');
   var b = req.param('b');
   var isFound = false;
@@ -27,7 +30,7 @@ app.post('/chat', function(req,res){
               else console.log("usdate sucess!");
             });
         db.Users.find({"user_id" : a},function(err, result) {
-          console.log(result[0].talk);
+          console.log("talk: "+result[0].talk);
         })
       }else{
         console.log(datas);
@@ -121,4 +124,3 @@ function find(a,b) {
 }
 }
 
-module.exports = chat;

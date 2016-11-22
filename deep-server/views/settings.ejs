@@ -37,7 +37,7 @@
         <div class="sideBar" style="">
           <div class="profile">
             <div class="profile_img">
-              <img src="/img/icon/profile.jpg" alt="" />
+              <img src=<%= img_url%> alt="" />
             </div>
             <div class="profile_index">
               <div class="profile_name">
@@ -81,10 +81,13 @@
                 <div class="basic">
 
                 </div>
+
+                <form id="setPro" action="/setPro" method="post" enctype="multipart/form-data">
                 <div class="setProfileName">
                   <label for="file" class="setProfileImgView"></label>
                   <input type="file" name="file" value="">
                 </div>
+              </form>
 
                 <div class="setProfileName">
                   <label for="setFirstName" class="nameView"></label>
@@ -93,13 +96,12 @@
                 </div>
                 <div class="profileMail">
                   <label for="setFirstName" class="mailView"></label>
-                  <input type="text" name="setMail" class="setEmail setInput" value="" placeholder="JohnSoo@KingGod.com">
+                  <input type="text" name="setMail" class="setEmail setInput" value="" placeholder=<%= email%>>
                 </div>
                 <div class="language">
                   <label for="korean" class="languageView"></label>
                   <button type="button" name="ko" class="setBtn ko">한국어</button>
                   <button type="button" name="en" class="setBtn en">English</button>
-                  <button type="button" name="Japanese" class="setBtn jp">日本語</button>
                 </div>
                 <div class="nullform">
                 </div>
